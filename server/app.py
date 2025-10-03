@@ -8,3 +8,16 @@ app = Flask(__name__)
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
+@app.route('/contract/<int:id>')
+def contract_find(id):
+    contract = [c for c in contracts if c["id"] == int(id)]
+    if len(contract) == 0:
+        return "no contract found", 404
+    return contract[0]["contract_information"], 200
+    
+@app.route('/customer/<customer_name>')
+def customer(customer_name):
+    if customer_name in customers:
+        return customer_name, 204
+    return "no customer found", 404
